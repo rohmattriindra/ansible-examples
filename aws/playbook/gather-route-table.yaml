@@ -1,0 +1,13 @@
+---
+ - name: Routing table ec2 instance
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+
+    - name: Gather information about all VPC route tables
+      amazon.aws.ec2_vpc_route_table_info:
+        filters:
+          route-table-id: 
+            - rtb-067de02d80f477ab0
+            - rtb-08aec0ed7fbf9428e

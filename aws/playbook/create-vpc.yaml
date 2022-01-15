@@ -1,0 +1,7 @@
+---
+- name: Create VPC
+  hosts: localhost  
+  gather_facts: no
+
+  roles:
+    - create-vpc

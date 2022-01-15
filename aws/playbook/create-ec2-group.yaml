@@ -1,0 +1,26 @@
+---
+ - name: Create EC2 Group
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+
+    - name: Create Rules on Security Group
+      ec2_group:
+        name: security-group-1
+        state: present
+        description: an example EC2 group
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443

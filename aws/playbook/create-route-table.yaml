@@ -1,0 +1,21 @@
+---
+ - name: Routing table ec2 instance
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+
+   - name: Set up public subnet route table
+     amazon.aws.ec2_vpc_route_table:
+       vpc_id: "{{ vpc_id }}"
+       region: "{{ region }}"
+       tags:
+         Name: route-"{{ env }}""
+       subnets:
+         - "{{ jumpbox_subnet.subnet.id }}"
+         - "{{ frontend_subnet.subnet.id }}"
+         - "{{ vpn_subnet.subnet_id }}"
+       routes:
+         - dest: 0.0.0.0/0
+           gateway_id: "{{ igw.gateway_id }}"
+     register: public_route_table

@@ -1,0 +1,24 @@
+- name: create VPC
+  amazon.aws.ec2_vpc_net:
+    name: "{{ vpc_name }}"
+    cidr_block: "{{ cidr }}"
+    region: "{{ regions }}"
+    tags:
+      module: ec2_vpc_net
+      this: works
+    tenancy: dedicated
+  register: my_vpc
+
+- name: Set VPC ID in variable
+  set_fact:
+    vpc_id: "{{ my_vpc.vpc.id }}"
+
+- name: Create subnet for web server zone A
+  amazon.aws.ec2_vpc_subnet:
+    state: present
+    vpc_id: "{{ vpc_id }}"
+    az: "{{ item.zone }}"
+    cidr: "{{ item.range }}"
+    tags:
+      Name: "{{ item.name }}"
+  with_items: "{{ subnet_vpc }}"

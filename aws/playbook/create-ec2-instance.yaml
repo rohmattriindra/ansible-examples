@@ -1,0 +1,27 @@
+---
+ - name: Working with AWS EC2 Instance
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+
+     - name: create a new ec2 key pair, returns generated private key
+       amazon.aws.ec2_key:
+         name: "prod-ssh-key"
+         state: "{{ state }}"
+         key_material: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+       tags: test
+ 
+     - name: Create EC2 instances
+       amazon.aws.ec2_instance: #https://github.com/ansible-collections/amazon.aws/tree/main/docs
+         name: instance-aws-1
+         state: "{{ state }}"
+         key_name: prod-ssh-key
+         vpc_subnet_id: subnet-0ac60bfe412e9aecc
+         instance_type: t3.nano
+         security_group: security-group-1
+         network:
+           assign_public_ip: true
+         image_id: ami-024221a59c9020e72
+         tags:
+           Environment: Production

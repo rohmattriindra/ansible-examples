@@ -1,0 +1,27 @@
+---
+regions: ap-southeast-1
+vpc_name: vpc-rotreein-prod
+cidr: 172.23.0.0/16
+vpc_id: vpc-05e2f1a537b9cada5
+region: ap-southeast-1
+env: production
+
+list_subnets:
+  - '172.23.1.0/24'
+  - '172.23.2.0/24'
+  - '172.23.3.0/24'
+  - '172.23.4.0/24'
+
+subnet_vpc:
+  - name: subnet-vm-prod-1a
+    zone: ap-southeast-1a
+    range: 172.23.1.0/24
+  - name: subnet-vm-prod-2a
+    zone: ap-southeast-1a
+    range: 172.23.2.0/24
+  - name: subnet-vm-prod-1b
+    zone: ap-southeast-1b
+    range: 172.23.3.0/24
+  - name: subnet-vm-prod-2b
+    zone: ap-southeast-1b
+    range: 172.23.4.0/24

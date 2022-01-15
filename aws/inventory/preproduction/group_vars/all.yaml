@@ -1,0 +1,27 @@
+---
+regions: ap-southeast-1
+vpc_name: vpc-rotreein-preprod
+cidr: 172.24.0.0/16
+vpc_id: vpc-05113631a6f5db3aa
+region: ap-southeast-1
+env: preproduction
+
+list_subnets:
+  - '172.24.1.0/24'
+  - '172.24.2.0/24'
+  - '172.24.3.0/24'
+  - '172.24.4.0/24'
+
+subnet_vpc:
+  - name: subnet-vm-preprod-1a
+    zone: ap-southeast-1a
+    range: 172.24.1.0/24
+  - name: subnet-vm-preprod-2a
+    zone: ap-southeast-1a
+    range: 172.24.2.0/24
+  - name: subnet-vm-preprod-1b
+    zone: ap-southeast-1b
+    range: 172.24.3.0/24
+  - name: subnet-vm-preprod-2b
+    zone: ap-southeast-1b
+    range: 172.24.4.0/24

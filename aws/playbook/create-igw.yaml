@@ -1,0 +1,31 @@
+---
+ - name: Create Internet Gateway
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+
+    - name: Create Internet Gateway
+      amazon.aws.ec2_vpc_igw:
+        vpc_id: "{{ vpc_id }}"
+        state: present
+        tags:
+            Tag1: tag1
+            Tag2: tag2
+      register: igw
+
+    - name: Set VPC ID in variable
+      set_fact:
+        igw_id: "{{ igw.gateway_id }}"
+
+    - name: Set up public subnet route table
+      amazon.aws.ec2_vpc_route_table:
+        vpc_id: "{{ vpc_id }}"
+        region: "{{ region }}"
+        tags:
+          Name: route-{{ env }}
+        subnets: "{{ list_subnets }}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{ igw_id }}"
+      register: public_route_table
