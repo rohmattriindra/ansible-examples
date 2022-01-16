@@ -1,0 +1,48 @@
+---
+- name: Create NAT Gateway
+  hosts: nat
+  connection: local
+  gather_facts: no
+
+  tasks:
+
+    - name: Check the existing Prefix Public
+      command: az network public-ip prefix list -g network --query "[?name=='{{ prefix_nat }}']" -o json
+      register: result_ip_public
+      changed_when: false
+
+    - set_fact:
+        ip_result: "{{ result_ip_public.stdout|from_json }}"
+
+    - name: Reserve Prefix Public IP
+      command: az network public-ip prefix create --resource-group {{ resource_group }} --name {{ prefix_nat }} --length 31
+      when: ip_result == []
+
+    - name: Check the existing NAT Gateway 
+      command: az network nat gateway list -o table --resource-group {{ resource_group }} --query "[?name=='{{ nat_name }}']" -o json
+      register: nat_gateway
+      changed_when: false
+
+    - set_fact:
+        nat_result: "{{ nat_gateway.stdout|from_json }}"
+
+    - name: Create NAT Gateway
+      command: | 
+        az network nat gateway create --resource-group {{ resource_group }} 
+        --name {{ nat_name }} --public-ip-prefixes {{ prefix_nat }} --idle-timeout 4
+      when: nat_result == []
+
+    - name: Check the existing subnet on NAT Gateway
+      command: az network nat gateway list --resource-group {{ resource_group }} --query "[?name=='{{ nat_name }}'].subnets" -o json 
+      register: subnet_list
+      changed_when: false
+
+    - set_fact:
+        subnet_result: "{{ subnet_list.stdout|from_json }}"
+
+    - name: Associate all subnet into NAT Gateway
+      command: | 
+        az network vnet subnet update --resource-group {{ resource_group }} --vnet-name {{ vnet_name }} 
+        --name {{ item.name }} --nat-gateway {{ nat_name }}
+      with_items: "{{ subnet_name }}"
+      when: subnet_result == []

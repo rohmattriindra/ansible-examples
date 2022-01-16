@@ -1,0 +1,168 @@
+- name: Create Virtual Machine
+  hosts: localhost  
+  gather_facts: no
+
+  tasks:
+
+    - name: Create virtual network inteface card hub
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_hub_1 }}"
+        virtual_network:  "{{ vnet_name_hub }}"
+        subnet:  subnet-vm-hub-1
+        security_group: "{{ nsg_name_hub }}"
+
+    - name: Create virtual network inteface spoke 1
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_spoke1 }}"
+        virtual_network:  "{{ vnet_name_spoke1 }}"
+        subnet:  subnet-vm-spoke1
+        security_group: "{{ nsg_name_spoke1 }}"
+
+    - name: Create virtual network inteface spoke 2
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_spoke2 }}"
+        virtual_network:  "{{ vnet_name_spoke2 }}"
+        subnet: subnet-vm-spoke2
+        security_group: "{{ nsg_name_spoke2 }}"
+
+    - name: Create virtual network inteface bastion
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_hub_bastion }}"
+        virtual_network:  "{{ vnet_name_hub }}"
+        subnet: subnet-vm-hub-bastion
+        security_group: "{{ nsg_name_hub }}"
+        public_ip_name: public-bastion
+
+    - name: Create virtual network inteface staging bastion
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_staging_bastion }}"
+        virtual_network:  "{{ vnet_name_staging }}"
+        subnet: subnet-vm-staging-1
+        security_group: "{{ nsg_name_staging }}"
+        public_ip_name: public-staging-bastion
+
+    - name: Create virtual network inteface staging 1
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_staging1 }}"
+        virtual_network:  "{{ vnet_name_staging }}"
+        subnet:  subnet-vm-staging-1
+        security_group: "{{ nsg_name_staging }}"
+
+    - name: Create virtual network inteface staging 2
+      azure_rm_networkinterface:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ nic_staging2 }}"
+        virtual_network:  "{{ vnet_name_staging }}"
+        subnet: subnet-vm-staging-2
+        security_group: "{{ nsg_name_staging }}"
+
+    - name: Create Virtual Machine Hub
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_hub }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_hub_1 }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present
+
+    - name: Create Virtual Machine Spoke 1
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_spoke1 }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_spoke1 }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present
+
+    - name: Create Virtual Machine Spoke 2
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_spoke2 }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_spoke2 }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present
+
+    - name: Create Virtual Machine Bastion
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_bastion }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_hub_bastion }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present
+
+    - name: Create Virtual Machine Staging 1
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_staging1 }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_staging1 }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present
+
+    - name: Create Virtual Machine Staging 2
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_staging2 }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_staging2 }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present
+
+    - name: Create Virtual Machine Staging Bastion
+      azure_rm_virtualmachine:
+        resource_group: "{{ resource_group_name}}"
+        name: "{{ vm_name_staging_bastion }}"
+        vm_size: "{{ vm_size }}"
+        admin_username: azureuser
+        admin_password: "{{ password_vm }}"
+        network_interfaces: "{{ nic_staging_bastion }}"
+        image:
+          offer: UbuntuServer
+          publisher: Canonical
+          sku: 16.04-LTS
+          version: latest
+        state: present

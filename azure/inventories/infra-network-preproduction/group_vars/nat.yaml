@@ -1,0 +1,7 @@
+---
+nat_name: nat-ansible-gateway-01
+prefix_nat: ip-prefix-nat-ansible
+
+subnet_name:
+  - name: subnet-vm-hub-1
+  - name: subnet-vm-hub-2

@@ -1,0 +1,7 @@
+---
+- name: Create Resource Group
+  hosts: localhost  
+  gather_facts: no
+
+  roles:
+    - resource-group

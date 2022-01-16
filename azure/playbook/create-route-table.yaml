@@ -1,0 +1,55 @@
+- name: Create Routing Table
+  hosts: localhost  
+  gather_facts: no
+
+  tasks:
+
+    - name: Create Route Table Spoke 1
+      azure_rm_routetable:
+        name: route_table_spoke1
+        resource_group: network
+        state: present
+
+    - name: Create Route Table Spoke 2
+      azure_rm_routetable:
+        name: route_table_spoke2
+        resource_group: network
+        state: present
+
+    - name: Create default route on Spoke1
+      azure_rm_route:
+        resource_group: network
+        name: default-route
+        address_prefix: 0.0.0.0/0
+        next_hop_type: virtual_appliance
+        next_hop_ip_address: 172.23.103.4
+        route_table_name: route_table_spoke1
+
+    - name: Create default route on Spoke2
+      azure_rm_route:
+        resource_group: network
+        name: default-route
+        address_prefix: 0.0.0.0/0
+        next_hop_type: virtual_appliance
+        next_hop_ip_address: 172.23.103.4
+        route_table_name: route_table_spoke2
+
+    - name: Associate route table to subnet spoke1
+      azure_rm_subnet:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ item.name }}"
+        address_prefix: "{{ item.range }}"
+        virtual_network: "{{ vnet_name_spoke1 }}"
+        route_table: route_table_spoke1
+        state: present
+      with_items: "{{ subnetworks_spoke1_vnet }}"
+
+    - name: Associate route table to subnet spoke2
+      azure_rm_subnet:
+        resource_group: "{{ resource_group_name }}"
+        name: "{{ item.name }}"
+        address_prefix: "{{ item.range }}"
+        virtual_network: "{{ vnet_name_spoke2 }}"
+        route_table: route_table_spoke2
+        state: present
+      with_items: "{{ subnetworks_spoke2_vnet }}"

@@ -1,0 +1,49 @@
+- name: Create Peering Connections
+  hosts: localhost  
+  gather_facts: no
+
+  tasks:
+
+    - name: Create virtual network peering HUB to Spoke1
+      azure_rm_virtualnetworkpeering:
+        resource_group: "{{ resource_group_name }}"
+        virtual_network: "{{ vnet_name_hub }}"
+        name: peer_hub_to_spoke1
+        remote_virtual_network:
+          resource_group: "{{ resource_group_name }}"
+          name: "{{ vnet_name_spoke1 }}"
+        allow_virtual_network_access: true
+        allow_forwarded_traffic: true
+
+    - name:  Create virtual network peering HUB to Spoke2
+      azure_rm_virtualnetworkpeering:
+        resource_group: "{{ resource_group_name }}"
+        virtual_network: "{{ vnet_name_hub }}"
+        name: peer_hub_to_spoke2
+        remote_virtual_network:
+          resource_group: "{{ resource_group_name }}"
+          name: "{{ vnet_name_spoke2 }}"
+        allow_virtual_network_access: true
+        allow_forwarded_traffic: true
+
+    - name: Create virtual Spoke 1 to HUB
+      azure_rm_virtualnetworkpeering:
+        resource_group: "{{ resource_group_name }}"
+        virtual_network: "{{ vnet_name_spoke1 }}"
+        name: peer_spoke1_to_hub
+        remote_virtual_network:
+          resource_group: "{{ resource_group_name }}"
+          name: "{{ vnet_name_hub }}"
+        allow_virtual_network_access: true
+        allow_forwarded_traffic: true
+
+    - name:  Create virtual Spoke 2 to HUB
+      azure_rm_virtualnetworkpeering:
+        resource_group: "{{ resource_group_name }}"
+        virtual_network: "{{ vnet_name_spoke2 }}"
+        name: peer_spoke2_to_hub
+        remote_virtual_network:
+          resource_group: "{{ resource_group_name }}"
+          name: "{{ vnet_name_hub }}"
+        allow_virtual_network_access: true
+        allow_forwarded_traffic: true

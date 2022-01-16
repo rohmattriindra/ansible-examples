@@ -1,0 +1,54 @@
+---
+- name: Create Virtual Networks
+  hosts: localhost  
+  gather_facts: no
+
+  tasks:
+
+  - name: Create Virtual Network HUB Vnet
+    azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ vnet_name_hub }}"
+      address_prefixes: "{{ address_prefixes_hub }}"
+      state: present
+
+  - name: Create Subnetworks Hub
+    azure_rm_subnet:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ item.name }}"
+      address_prefix: "{{ item.range }}"
+      virtual_network: "{{ vnet_name_hub }}"
+      state: present
+    with_items: "{{ subnetworks_hub_vnet }}"
+
+  - name: Create Virtual Network Spoke-1 Vnet
+    azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ vnet_name_spoke1 }}"
+      address_prefixes: "{{ address_prefixes_spoke1 }}"
+      state: present
+
+  - name: Create Subnetworks Spoke 1
+    azure_rm_subnet:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ item.name }}"
+      address_prefix: "{{ item.range }}"
+      virtual_network: "{{ vnet_name_spoke1 }}"
+      state: present
+    with_items: "{{ subnetworks_spoke1_vnet }}"
+
+  - name: Create Virtual Network Spoke-2 Vnet
+    azure_rm_virtualnetwork:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ vnet_name_spoke2 }}"
+      address_prefixes: "{{ address_prefixes_spoke2 }}"
+      state: present
+
+  - name: Create Subnetworks Spoke 2
+    azure_rm_subnet:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ item.name }}"
+      address_prefix: "{{ item.range }}"
+      virtual_network: "{{ vnet_name_spoke2 }}"
+      state: present
+    with_items: "{{ subnetworks_spoke2_vnet }}"

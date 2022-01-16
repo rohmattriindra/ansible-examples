@@ -1,0 +1,15 @@
+- name: Create vnet {{ virtual_network }}
+  azure_rm_virtualnetwork:
+    resource_group: "{{ resource_group }}"
+    name: "{{ virtual_network }}"
+    address_prefixes: "{{ address_prefixes }}"
+
+- name: Create Subnetworks {{ virtual_network }}
+  azure_rm_subnet:
+    resource_group: "{{ resource_group }}"
+    name: "{{ item.name }}"
+    address_prefix: "{{ item.range }}"
+    virtual_network: "{{ virtual_network }}"
+    security_group:
+      name: "{{ security_group_id }}"
+  with_items: "{{ subnetworks_vnet }}"

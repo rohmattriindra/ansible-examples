@@ -1,0 +1,105 @@
+---
+resource_group: network
+virtual_network: vnet-network-preproduction
+network_security_group: nsg-network-preproduction
+region: southeastasia
+security_group_id: /subscriptions/43f24650-16e4-4f7b-9944-cff4fb26d8bd/resourceGroups/network/providers/Microsoft.Network/networkSecurityGroups/nsg-network-preproduction
+address_prefixes: ['172.25.0.0/17','10.144.0.0/13','10.152.0.0/13']
+
+subnetworks_vnet:
+  - name: subnet-vm-loadtest-1
+    region: eastasia
+    range: 172.25.50.0/24
+  - name: subnet-vm-static-loadtest-1
+    region: asiasoutheast
+    range: 172.25.44.0/22
+  - name: subnet-vm-data-preproduction-1
+    region: asiasoutheast
+    range: 172.25.32.0/21
+  - name: subnet-vm-log-preproduction-1
+    region: asiasoutheast
+    range: 172.25.40.0/22
+  - name: subnet-vm-preproduction-1
+    region: asiasoutheast
+    range: 172.25.0.0/19
+  - name: subnet-vm-streaming-engine-preproduction-1
+    region: asiasoutheast
+    range: 172.25.48.0/23
+  - name: subnet-k8s-preproduction-1
+    region: asiasoutheast
+    range: 10.144.0.0/17
+  - name: subnet-k8s-preproduction-2
+    region: asiasoutheast
+    range: 10.144.128.0/17
+  - name: subnet-k8s-preproduction-3
+    region: asiasoutheast
+    range: 10.145.0.0/17
+  - name: subnet-k8s-preproduction-4
+    region: asiasoutheast
+    range: 10.145.128.0/17
+  - name: subnet-k8s-preproduction-5
+    region: asiasoutheast
+    range: 10.146.0.0/17
+  - name: subnet-k8s-preproduction-6
+    region: asiasoutheast
+    range: 10.146.128.0/17
+  - name: subnet-k8s-preproduction-7
+    region: asiasoutheast
+    range: 10.147.0.0/17
+  - name: subnet-k8s-preproduction-8
+    region: asiasoutheast
+    range: 10.147.128.0/17
+  - name: subnet-k8s-preproduction-9
+    region: asiasoutheast
+    range: 10.148.0.0/17
+  - name: subnet-k8s-preproduction-10
+    region: asiasoutheast
+    range: 10.148.128.0/17
+  - name: subnet-k8s-preproduction-11
+    region: asiasoutheast
+    range: 10.149.0.0/17
+  - name: subnet-k8s-preproduction-12
+    region: asiasoutheast
+    range: 10.149.128.0/17
+  - name: subnet-k8s-preproduction-13
+    region: asiasoutheast
+    range: 10.150.0.0/17
+  - name: subnet-k8s-preproduction-14
+    region: asiasoutheast
+    range: 10.150.128.0/17
+  - name: subnet-k8s-preproduction-15
+    region: asiasoutheast
+    range: 10.151.0.0/17
+  - name: subnet-k8s-preproduction-16
+    region: asiasoutheast
+    range: 10.151.128.0/17
+  - name: subnet-k8s-preproduction-17
+    region: asiasoutheast
+    range: 10.152.0.0/17
+  - name: subnet-k8s-preproduction-18
+    region: asiasoutheast
+    range: 10.152.128.0/17
+  - name: subnet-k8s-preproduction-19
+    region: asiasoutheast
+    range: 10.153.0.0/17
+  - name: subnet-k8s-preproduction-20
+    region: asiasoutheast
+    range: 10.153.128.0/17
+  - name: subnet-k8s-preproduction-21
+    region: asiasoutheast
+    range: 10.154.0.0/17
+  - name: subnet-k8s-preproduction-22
+    region: asiasoutheas
+    range: 10.154.128.0/17
+  - name: subnet-k8s-preproduction-23
+    region: asiasoutheast
+    range: 10.155.0.0/17
+  - name: subnet-k8s-preproduction-24
+    region: asiasoutheast
+    range: 10.155.128.0/17
+  - name: subnet-k8s-preproduction-25
+    region: asiasoutheast
+    range: 10.156.0.0/17
+  - name: subnet-k8s-preproduction-26
+    region: asiasoutheast
+    range: 10.156.128.0/17

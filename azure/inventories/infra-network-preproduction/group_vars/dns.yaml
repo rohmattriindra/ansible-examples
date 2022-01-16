@@ -1,0 +1,40 @@
+---
+zone_name: staging.internal
+
+dns_records:
+  - name: service-a
+    type: A
+    records:
+      - entry: 10.4.5.11
+  - name: service-b
+    type: A
+    records:
+      - entry: 10.4.5.12
+  - name: service-c
+    type: A
+    records:
+      - entry: 10.4.5.13
+  - name: service-d
+    type: A
+    records:
+      - entry: 10.4.5.14
+  - name: service-e
+    type: A
+    records:
+      - entry: 10.4.5.15
+  - name: service-f
+    type: A
+    records:
+      - entry: 10.4.5.16
+  - name: service-g
+    type: A
+    records:
+      - entry: 10.4.5.17
+  - name: service-h
+    type: A
+    records:
+      - entry: 10.4.5.18
+  - name: service-i
+    type: A
+    records:
+      - entry: 10.4.5.19

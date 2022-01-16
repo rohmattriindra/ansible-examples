@@ -1,0 +1,8 @@
+---
+- name: Create Virtual Networks
+  hosts: vnet
+  connection: local
+  gather_facts: no
+
+  roles:
+    - create-vnet

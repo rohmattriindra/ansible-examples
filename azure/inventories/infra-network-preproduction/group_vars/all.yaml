@@ -1,0 +1,6 @@
+---
+resource_group: network
+vnet_preproduction: vnet-network-preproduction
+nsg_preprod: nsg-network-preproduction
+region: southeastasia
+security_group_id: /subscriptions/43f24650-16e4-4f7b-9944-cff4fb26d8bd/resourceGroups/network/providers/Microsoft.Network/networkSecurityGroups/nsg-network-preproduction

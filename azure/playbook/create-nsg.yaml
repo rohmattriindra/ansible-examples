@@ -1,0 +1,128 @@
+#https://docs.ansible.com/ansible/latest/collections/azure/azcollection/azure_rm_securitygroup_module.html
+---
+- name: Create Network Security Group
+  hosts: localhost  
+  gather_facts: no
+  
+  tasks:
+
+  - name: Create "{{ nsg_name_hub }}"
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ nsg_name_hub }}"
+      purge_rules: yes
+      rules:
+          - name: Allow-ICMP
+            protocol: Icmp 
+            source_address_prefix: "*"
+            destination_port_range: "*"
+            access: Allow
+            priority: 100
+            direction: Inbound
+          - name: Allow-SSH
+            protocol: Tcp
+            source_address_prefix: "*"
+            destination_port_range: 22
+            access: Allow
+            priority: 101
+            direction: Inbound
+          - name: Allow-WEB
+            protocol: Tcp
+            source_address_prefix: "*"
+            destination_port_range:
+              - '443'
+              - '80'
+            access: Allow
+            priority: 102
+            direction: Inbound
+          - name: Allow-MySQL
+            protocol: Tcp
+            source_address_prefix:
+              - '172.23.100.0/24'
+              - '172.23.101.0/24'
+            destination_port_range: 3306
+            access: Allow
+            priority: 103
+            direction: Inbound
+      state: present
+
+  - name: Create "{{ nsg_name_spoke1 }}"
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ nsg_name_spoke1 }}"
+      purge_rules: yes
+      rules:
+          - name: Allow-ICMP
+            protocol: Icmp 
+            source_address_prefix: "*"
+            destination_port_range: "*"
+            access: Allow
+            priority: 100
+            direction: Inbound
+          - name: Allow-SSH
+            protocol: Tcp
+            source_address_prefix: "*"
+            destination_port_range: 22
+            access: Allow
+            priority: 101
+            direction: Inbound
+          - name: Allow-WEB
+            protocol: Tcp
+            source_address_prefix: "*"
+            destination_port_range:
+              - '443'
+              - '80'
+            access: Allow
+            priority: 102
+            direction: Inbound
+          - name: Allow-MySQL
+            protocol: Tcp
+            source_address_prefix:
+              - '172.24.100.0/24'
+              - '172.24.101.0/24'
+            destination_port_range: 3306
+            access: Allow
+            priority: 103
+            direction: Inbound
+      state: present
+
+
+  - name: Create "{{ nsg_name_spoke2 }}"
+    azure_rm_securitygroup:
+      resource_group: "{{ resource_group_name }}"
+      name: "{{ nsg_name_spoke2 }}"
+      purge_rules: yes
+      rules:
+          - name: Allow-ICMP
+            protocol: Icmp 
+            source_address_prefix: "*"
+            destination_port_range: "*"
+            access: Allow
+            priority: 100
+            direction: Inbound
+          - name: Allow-SSH
+            protocol: Tcp
+            source_address_prefix: "*"
+            destination_port_range: 22
+            access: Allow
+            priority: 101
+            direction: Inbound
+          - name: Allow-WEB
+            protocol: Tcp
+            source_address_prefix: "*"
+            destination_port_range:
+              - '443'
+              - '80'
+            access: Allow
+            priority: 102
+            direction: Inbound
+          - name: Allow-MySQL
+            protocol: Tcp
+            source_address_prefix:
+              - '172.25.100.0/24'
+              - '172.25.101.0/24'
+            destination_port_range: 3306
+            access: Allow
+            priority: 103
+            direction: Inbound
+      state: present

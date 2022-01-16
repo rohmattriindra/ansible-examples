@@ -1,0 +1,33 @@
+---
+nsg_rules:
+  - name: allow-icmp
+    protocol: Icmp
+    source_address_prefix: "*"
+    destination_port_range: "*"
+    access: Allow
+    priority: 101
+    direction: Inbound
+
+  - name: allow-ssh
+    protocol: Tcp
+    source_address_prefix: "*"
+    destination_port_range: "*"
+    access: Allow
+    priority: 102
+    direction: Inbound
+
+  - name: allow-web
+    protocol: Tcp
+    source_address_prefix: "*"
+    destination_port_range: "80"
+    access: Allow
+    priority: 103
+    direction: Inbound
+
+  - name: allow-iperf
+    protocol: Tcp
+    source_address_prefix: "*"
+    destination_port_range: "5201"
+    access: Allow
+    priority: 104
+    direction: Inbound

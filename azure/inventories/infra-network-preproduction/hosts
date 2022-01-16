@@ -1,0 +1,8 @@
+[dns]
+localhost ansible_python_interpreter=python3
+[nsg]
+localhost ansible_python_interpreter=python3
+[vnet]
+localhost ansible_python_interpreter=python3
+[nat]
+localhost ansible_python_interpreter=python3
